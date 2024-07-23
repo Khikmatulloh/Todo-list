@@ -6,32 +6,32 @@ $bot = new Bot();
 
 if (isset($update->message)) {
     $message = $update->message;
-    $chat_id = $message->chat->id;
-    $user    = $message->from->username ?? '';
-    $text    = $message->text ?? 'Not specified';
+    $chatId  = $message->chat->id;
+    $text    = $message->text;
 
-    if ($text === '/start') {
-        $bot->handleStartCommand($chat_id);
+    if ($text === "/start") {
+        $bot->handleStartCommand($chatId);
         return;
     }
 
-    if ($text === '/add') {
-        $bot->handleAddCommand($chat_id);
+    if ($text === "/add") {
+        $bot->handleAddCommand($chatId);
         return;
     }
+
+    if ($text === "/all") {
+        $bot->getAllTasks($chatId);
+        return;
+    }
+
+    $bot->addTask($chatId, $text);
 }
 
 if (isset($update->callback_query)) {
     $callbackQuery = $update->callback_query;
-    $callbackData  = $callbackQuery->data;
+    $callbackData  = (int) $callbackQuery->data;
     $chatId        = $callbackQuery->message->chat->id;
     $messageId     = $callbackQuery->message->message_id;
 
-    $bot->http->post('sendMessage', [
-        'form_params' => [
-            'chat_id' => $chatId,
-            'text'    => $callbackData,
-        ]
-    ]);
-    return;
+    $bot->handleInlineButton($chatId, $callbackData);
 }
