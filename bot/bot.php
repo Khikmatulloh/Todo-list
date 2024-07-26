@@ -25,7 +25,7 @@ if (isset($update->message)) {
     }
 
     $bot->addTask($chatId, $text);
-}
+} 
 
 if (isset($update->callback_query)) {
     $callbackQuery = $update->callback_query;

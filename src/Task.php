@@ -58,4 +58,10 @@ class Task
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
+    public function getTasksByUser(int $userId) {
+        $user = $this->pdo->prepare("SELECT * FROM todos WHERE user_id = :userId");
+        $user->bindParam(':userId', $userId);
+        $user->execute();
+        return $user->fetchAll(PDO::FETCH_OBJ);
+    }
 }
