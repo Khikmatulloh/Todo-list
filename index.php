@@ -2,7 +2,7 @@
 
 require_once "vendor/autoload.php";
 require_once "bootstrap.php";
-require_once "router.php";
+require_once "routes.php";
 // date_default_timezone_set('Asia/Tashkent');
 
 // $update = json_decode(file_get_contents('php://input'));
